@@ -2,6 +2,10 @@
   "name": "groq-code-assistant",
   "displayName": "Groq Code Assistant",
   "description": "An AI coding assistant powered by Groq, inspired by Claude Code.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mirkulix/GroqCodeExtension.git"
+  },
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.80.0"
