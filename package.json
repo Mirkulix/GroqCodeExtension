@@ -1,0 +1,164 @@
+{
+  "name": "groq-code-assistant",
+  "displayName": "Groq Code Assistant",
+  "description": "An AI coding assistant powered by Groq, inspired by Claude Code.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "AI",
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onView:groq.chatView",
+    "onCommand:groq.setApiKey",
+    "onCommand:groq.selectModel",
+    "onCommand:groq.clearChat"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "groq-sidebar-view",
+          "title": "Groq Code Assistant",
+          "icon": "media/groq-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "groq-sidebar-view": [
+        {
+          "type": "webview",
+          "id": "groq.chatView",
+          "name": "Chat"
+        },
+        {
+          "type": "tree",
+          "id": "groq.historyView",
+          "name": "Chat History"
+        },
+        {
+          "type": "webview",
+          "id": "groq.agentBuilderView",
+          "name": "Agent Builder"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "groq.newChat",
+        "title": "New Chat",
+        "icon": "$(add)",
+        "category": "Groq"
+      },
+      {
+        "command": "groq.deleteChat",
+        "title": "Delete Chat",
+        "icon": "$(trash)",
+        "category": "Groq"
+      },
+      {
+        "command": "groq.clearChat",
+        "title": "Groq: Clear Chat",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "groq.setApiKey",
+        "title": "Groq: Set API Key",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "groq.selectModel",
+        "title": "Groq: Select Model"
+      },
+      {
+        "command": "groq.checkMemory",
+        "title": "Check Memory Status",
+        "category": "Groq"
+      },
+      {
+        "command": "groq.reindex",
+        "title": "Re-index Workspace",
+        "category": "Groq"
+      },
+      {
+        "command": "groq.openEditorChat",
+        "title": "Open Chat in Editor",
+        "category": "Groq",
+        "icon": "$(layout-sidebar-right)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+            "command": "groq.openEditorChat",
+            "when": "view == groq.chatView",
+            "group": "navigation"
+        },
+        {
+          "command": "groq.newChat",
+          "when": "view == groq.chatView",
+          "group": "navigation"
+        },
+        {
+          "command": "groq.clearChat",
+          "when": "view == groq.chatView",
+          "group": "navigation"
+        },
+        {
+          "command": "groq.setApiKey",
+          "when": "view == groq.chatView",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "groq.deleteChat",
+          "when": "view == groq.historyView && viewItem == chatSession",
+          "group": "inline"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Groq Code",
+      "properties": {
+        "groqCode.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Your Groq API Key (https://console.groq.com)"
+        },
+        "groqCode.model": {
+          "type": "string",
+          "default": "llama3-70b-8192",
+          "description": "The Groq model to use.",
+          "enum": [
+            "llama3-70b-8192",
+            "llama3-8b-8192",
+            "mixtral-8x7b-32768",
+            "gemma-7b-it"
+          ]
+        },
+        "groqCode.systemPrompt": {
+          "type": "string",
+          "default": "You are a helpful coding assistant. You answer concisely and provide code snippets.",
+          "description": "System prompt for the AI."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "18.x",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.1.3"
+  },
+  "dependencies": {
+    "groq-sdk": "^0.3.3"
+  }
+}
